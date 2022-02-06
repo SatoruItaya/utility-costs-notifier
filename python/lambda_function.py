@@ -3,6 +3,17 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome import service as fs
 import os
 from time import sleep
+import boto3
+
+
+def get_parameter(name):
+    ssm_client = boto3.client('ssm')
+    response = ssm_client.get_parameter(
+        Name=name,
+        WithDecryption=True
+    )
+
+    return response['Parameter']['Value']
 
 
 # def lambda_handler(event, context):
@@ -19,10 +30,10 @@ def lambda_handler():
     driver.get(login_page_link)
 
     login_id = driver.find_element(By.XPATH, '//input[@name="loginId"]')
-    login_id.send_keys(os.environ['GASS_ID'])
+    login_id.send_keys(get_parameter('mail-address'))
 
     password = driver.find_element(By.XPATH, '//input[@name="password"]')
-    password.send_keys(os.environ['GASS_PASSWORD'])
+    password.send_keys(get_parameter('tokyo-gas-password'))
 
     # top page
     submit_btn = driver.find_element(By.ID, 'submit-btn')
