@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome import service as fs
 import os
 from time import sleep
 
@@ -9,7 +10,8 @@ from time import sleep
 
 def lambda_handler():
 
-    driver = webdriver.Chrome('./chromedriver')
+    chrome_service = fs.Service(executable_path='./chromedriver')
+    driver = webdriver.Chrome(service=chrome_service)
 
     # login page
     driver.get('https://members.tokyo-gas.co.jp/')
