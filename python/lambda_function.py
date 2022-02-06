@@ -40,8 +40,21 @@ def lambda_handler():
 
     sleep(5)
 
-    billing_amount = driver.find_element(By.CLASS_NAME, 'number-medium').text
-    print(billing_amount)
+    usage_term = driver.find_element(By.XPATH, '//*[@id="gas"]/div[2]/div[1]/div/div[3]/p[2]/span[1]').text
+    usage_days = driver.find_element(By.XPATH, '//*[@id="gas"]/div[2]/div[1]/div/div[3]/p[2]/span[2]').text
+    billing_amount = driver.find_element(By.XPATH, '//*[@id="gas"]/div[2]/div[2]/div[1]/div[1]/p[2]/span').text
+    usage_amount = driver.find_element(By.XPATH, '//*[@id="gas"]/div[2]/div[2]/div[2]/div[1]/p[2]/span').text
+    yoy = driver.find_element(By.XPATH, '//*[@id="gas"]/div[2]/div[2]/div[2]/div[2]/p/span').text
+    yoy_days = driver.find_element(By.XPATH, '//*[@id="gas"]/div[2]/div[2]/div[2]/div[2]/div/p[2]').text
+    mom = driver.find_element(By.XPATH, '//*[@id="gas"]/div[2]/div[2]/div[2]/div[3]/p/span').text
+    mom_days = driver.find_element(By.XPATH, '//*[@id="gas"]/div[2]/div[2]/div[2]/div[3]/div/p[2]').text
+
+    print('使用期間:' + usage_term)
+    print('使用日:' + usage_days)
+    print('請求額:' + billing_amount)
+    print('使用量:' + usage_amount)
+    print('前年同月:' + yoy + '(' + yoy_days + ')')
+    print('前月:' + mom + '(' + mom_days + ')')
 
 
 if __name__ == "__main__":
