@@ -9,11 +9,11 @@ def get_gas_cost(driver, mail_address, password):
     login_page_link = driver.find_element(By.CLASS_NAME, 'mtg-button-cta').get_attribute('href')
     driver.get(login_page_link)
 
-    login_id = driver.find_element(By.XPATH, '//input[@name="loginId"]')
-    login_id.send_keys(mail_address)
+    login_id_element = driver.find_element(By.XPATH, '//input[@name="loginId"]')
+    login_id_element.send_keys(mail_address)
 
-    password = driver.find_element(By.XPATH, '//input[@name="password"]')
-    password.send_keys(password)
+    password_element = driver.find_element(By.XPATH, '//input[@name="password"]')
+    password_element.send_keys(password)
 
     # top page
     submit_btn = driver.find_element(By.ID, 'submit-btn')
