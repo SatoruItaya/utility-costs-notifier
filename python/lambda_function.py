@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome import service as fs
 import boto3
 import tokyo_gas
+import tokyo_suido
 
 
 def get_parameter(name):
@@ -15,8 +16,6 @@ def get_parameter(name):
 
 
 # def lambda_handler(event, context):
-
-
 def lambda_handler():
 
     chrome_service = fs.Service(executable_path='./chromedriver')
@@ -25,7 +24,12 @@ def lambda_handler():
     mail_address = get_parameter('mail-address')
     tokyo_gas_password = get_parameter('tokyo-gas-password')
 
-    tokyo_gas.get_gas_cost(driver, mail_address, tokyo_gas_password)
+    #tokyo_gas.get_gas_cost(driver, mail_address, tokyo_gas_password)
+
+    tokyo_suido_id = get_parameter('tokyo-suido-id')
+    tokyo_suido_pawssword = get_parameter('tokyo-suido-password')
+
+    tokyo_suido.get_suido_cost(driver, tokyo_suido_id, tokyo_suido_pawssword)
 
 
 if __name__ == "__main__":
