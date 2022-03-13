@@ -3,6 +3,7 @@ from selenium.webdriver.chrome import service as fs
 import boto3
 import tokyo_gas
 import tokyo_suido
+import next_power
 
 
 def get_parameter(name):
@@ -29,7 +30,12 @@ def lambda_handler():
     tokyo_suido_id = get_parameter('tokyo-suido-id')
     tokyo_suido_pawssword = get_parameter('tokyo-suido-password')
 
-    tokyo_suido.get_suido_cost(driver, tokyo_suido_id, tokyo_suido_pawssword)
+    #tokyo_suido.get_suido_cost(driver, tokyo_suido_id, tokyo_suido_pawssword)
+
+    next_power_id = get_parameter('next-power-id')
+    next_power_password = get_parameter('next-power-password')
+
+    next_power.get_electricity_cost(driver, next_power_id, next_power_password)
 
 
 if __name__ == "__main__":
