@@ -4,6 +4,23 @@ from time import sleep
 import datetime
 
 
+def transition_to_previous_year(driver):
+    previous_year_btn = driver.find_element(By.XPATH, '//*[@id="lbPre"]')
+    previous_year_btn.click()
+    sleep(5)
+
+
+def get_monthly_detail(month, driver):
+    if month <= 6:
+        usage_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(month + 1) + ']/td[2]/div').text
+        billing_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(month + 1) + ']/td[3]/div').text
+    else:
+        usage_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(month - 6 + 1) + ']/td[5]/div').text
+        billing_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(month - 6 + 1) + ']/td[6]/div').text
+
+    return usage_amount, billing_amount
+
+
 def get_electricity_cost(driver, id, password):
 
     # login page
@@ -29,20 +46,15 @@ def get_electricity_cost(driver, id, password):
     now = datetime.datetime.now()
     driver.switch_to.frame(driver.find_element(By.TAG_NAME, 'iframe'))
 
+    base_month = 0
+
     if now.month == 1:
-        previous_year_btn = driver.find_element(By.XPATH, '//*[@id="lbPre"]')
-        previous_year_btn.click()
-        sleep(5)
-        usage_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[7]/td[5]/div').text
-        billing_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[7]/td[6]/div').text
+        base_month = 12
+        transition_to_previous_year(driver)
     else:
-        previous_month = now.month - 1
-        if previous_month <= 6:
-            usage_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(previous_month + 1) + ']/td[2]/div').text
-            billing_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(previous_month + 1) + ']/td[3]/div').text
-        else:
-            usage_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(previous_month - 6 + 1) + ']/td[5]/div').text
-            billing_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(previous_month - 6 + 1) + ']/td[6]/div').text
+        base_month = now.month - 1
+
+    usage_amount, billing_amount = get_monthly_detail(base_month, driver)
 
     print(usage_amount)
     print(billing_amount)
