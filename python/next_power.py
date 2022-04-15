@@ -14,6 +14,7 @@ def get_monthly_detail(month, driver):
     if month <= 6:
         usage_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(month + 1) + ']/td[2]/div').text
 
+        # If there is no data
         if usage_amount == '0.0':
             billing_amount = ""
         else:
@@ -21,6 +22,7 @@ def get_monthly_detail(month, driver):
     else:
         usage_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(month - 6 + 1) + ']/td[5]/div').text
 
+        # If there is no data
         if usage_amount == '0.0':
             billing_amount = ""
         else:
