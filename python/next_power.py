@@ -13,10 +13,18 @@ def transition_to_previous_year(driver):
 def get_monthly_detail(month, driver):
     if month <= 6:
         usage_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(month + 1) + ']/td[2]/div').text
-        billing_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(month + 1) + ']/td[3]/div').text
+
+        if usage_amount == '0.0':
+            billing_amount = ""
+        else:
+            billing_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(month + 1) + ']/td[3]/div').text
     else:
         usage_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(month - 6 + 1) + ']/td[5]/div').text
-        billing_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(month - 6 + 1) + ']/td[6]/div').text
+
+        if usage_amount == '0.0':
+            billing_amount = ""
+        else:
+            billing_amount = driver.find_element(By.XPATH, '//*[@id="Tbl_MonthTable"]/tbody/tr[' + str(month - 6 + 1) + ']/td[6]/div').text
 
     return usage_amount, billing_amount
 
@@ -48,6 +56,7 @@ def get_electricity_cost(driver, id, password):
 
     base_month = 0
 
+    # get details in target month
     if now.month == 1:
         base_month = 12
         transition_to_previous_year(driver)
@@ -56,12 +65,13 @@ def get_electricity_cost(driver, id, password):
 
     usage_amount, billing_amount = get_monthly_detail(base_month, driver)
 
+    mom_usage_amount, _ = get_monthly_detail(base_month - 1, driver)
+
+    # transition to previous year to get year-on-year data
+    transition_to_previous_year(driver)
+    yoy_usage_amount, _ = get_monthly_detail(base_month, driver)
+
     print(usage_amount)
     print(billing_amount)
-
-    sleep(5)
-
-    # TODO
-    # componentを関数に
-    # 前年遷移
-    # usage_amountとbilling_amountを取得
+    print(mom_usage_amount)
+    print(yoy_usage_amount)
