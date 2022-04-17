@@ -1,9 +1,14 @@
 from selenium import webdriver
 from selenium.webdriver.chrome import service as fs
 import boto3
+import os
+import requests
 import tokyo_gas
 import tokyo_suido
 import next_power
+
+LINE_NOTIFY_TOKEN_PARAMETER_NAME = os.environ["LINE_NOTIFY_TOKEN_PARAMETER_NAME"]
+URL = "https://notify-api.line.me/api/notify"
 
 
 def get_parameter(name):
@@ -36,6 +41,12 @@ def lambda_handler():
     next_power_password = get_parameter('next-power-password')
 
     next_power_message = next_power.get_electricity_cost(driver, next_power_id, next_power_password)
+
+    message = next_power_message
+
+    headers = {"Authorization": "Bearer %s" % get_parameter(LINE_NOTIFY_TOKEN_PARAMETER_NAME)}
+    data = {'message': message}
+    response = requests.post(URL, headers=headers, data=data)
 
 
 if __name__ == "__main__":
