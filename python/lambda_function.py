@@ -35,7 +35,7 @@ def lambda_handler():
     next_power_id = get_parameter('next-power-id')
     next_power_password = get_parameter('next-power-password')
 
-    next_power.get_electricity_cost(driver, next_power_id, next_power_password)
+    next_power_message = next_power.get_electricity_cost(driver, next_power_id, next_power_password)
 
 
 if __name__ == "__main__":
