@@ -2,6 +2,8 @@ from selenium.webdriver.common.by import By
 import unicodedata
 from time import sleep
 
+import datetime
+
 
 def get_suido_cost(driver, id, password):
 
@@ -28,17 +30,20 @@ def get_suido_cost(driver, id, password):
     try:
         yoy = driver.find_element(By.XPATH, '//*[@id="vi"]/table[7]/tbody/tr[6]/td[3]/span').text
     except:
-        yoy = None
+        yoy = '-'
 
     mom = driver.find_element(By.XPATH, '//*[@id="vi"]/table[7]/tbody/tr[5]/td[6]/span').text
 
-    print('使用期間:' + usage_term)
-    print('請求額:' + unicodedata.normalize('NFKC', billing_amount))
-    print('使用量:' + unicodedata.normalize('NFKC', usage_amount) + 'm^3')
+    now = datetime.datetime.now()
 
-    if yoy is not None:
-        print('前年同期:' + yoy + 'm^3')
+    message = '\n' + str(now.year) + '年' + str(now.month - 1) + '~' + str(now.month) + ' 月 水道使用量・料金\n\n'
+    message += '使用期間:' + usage_term + '\n'
+    message += '請求額(円):' + unicodedata.normalize('NFKC', billing_amount) + '\n'
+    message += '使用量(m^3):' + unicodedata.normalize('NFKC', usage_amount) + '\n'
+    message += '前月使用量(m^3):' + mom + '\n'
+    message += '前年同月使用量(m^3):' + yoy
 
-    print('前回:' + mom + 'm^3')
+    # TODO delete
+    print(message)
 
-    sleep(5)
+    return message
