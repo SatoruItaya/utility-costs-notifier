@@ -78,9 +78,9 @@ def get_electricity_cost(driver, id, password):
     transition_to_previous_year(driver)
     yoy_usage_amount, _ = get_monthly_detail(base_month, driver)
 
-    message = '\n' + str(base_year) + '年' + str(base_month) + '月電気使用量\n\n'
-    message += '当月使用量(kWh):' + usage_amount + '\n'
-    message += '金額(円):' + billing_amount + '\n'
+    message = '\n' + str(base_year) + '年' + str(base_month) + '月 電気使用量・料金\n\n'
+    message += '請求額(円):' + billing_amount + '\n'
+    message += '使用量(kWh):' + usage_amount + '\n'
     message += '前月使用量(kWh):' + mom_usage_amount + '\n'
     message += '前年同月使用量(kWh):' + yoy_usage_amount
 
