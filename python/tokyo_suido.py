@@ -23,7 +23,7 @@ def get_suido_cost(driver, id, password):
     detail_page_link = driver.find_element(By.XPATH, '//*[@id="main"]/div[1]/div[2]/div[1]/a').get_attribute('href')
     driver.get(detail_page_link)
 
-    usage_term = driver.find_element(By.XPATH, '//*[@id="vi"]/table[6]/tbody/tr/td[2]').text
+    usage_term = driver.find_element(By.XPATH, '//*[@id="vi"]/table[6]/tbody/tr/td[4]').text.replace('（検針日）', '')
     billing_amount = driver.find_element(By.XPATH, '//*[@id="vi"]/table[9]/tbody/tr[5]/td[2]').text
     usage_amount = driver.find_element(By.XPATH, '//*[@id="vi"]/table[7]/tbody/tr[5]/td[3]/font/span[1]').text
 
