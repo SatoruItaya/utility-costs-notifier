@@ -1,4 +1,4 @@
-chromedriver_binary==100.0.4896.60.0
+chromedriver_binary==101.0.4951.41.0
 boto3==1.17.42
 requests==2.26.0
 selenium==4.1.3
