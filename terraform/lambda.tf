@@ -10,17 +10,17 @@ resource "aws_lambda_function" "lambda" {
 
   timeout = 60
 
-  /*
   environment {
     variables = {
-      CLIENT_ID_PARAMETER_NAME         = var.client_id_parameter_name
-      CLIENT_SECRET_PARAMETER_NAME     = var.client_secret_parameter_name
-      LINE_NOTIFY_TOKEN_PARAMETER_NAME = var.line_notify_token_parameter_name
-      REFRESH_CB_BUCKET_NAME           = var.fitbit_refresh_cb_bucket_name
-      REFRESH_CB_FILE_NAME             = var.fitbit_refresh_cb_file_name
+      LINE_NOTIFY_TOKEN_PARAMETER_NAME    = var.line_notify_token_parameter_name
+      MAIL_ADDRESS_PARAMETER_NAME         = var.mail_address_parameter_name
+      TOKYO_GASS_PASSWORD_PARAMETER_NAME  = var.tokyo_gas_password_parameter_name
+      TOKYO_SUIDO_ID_PARAMETER_NAME       = var.tokyo_suido_id_parameter_name
+      TOKYO_SUIDO_PASSWORD_PARAMETER_NAME = var.tokyo_suido_password_parameter_name
+      NEXT_POWER_ID_PARAMETER_NAME        = var.next_power_id_parameter_name
+      NEXT_POWER_PASSWORD_PARAMETER_NAME  = var.next_power_password_parameter_name
     }
   }
-  */
 }
 
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
