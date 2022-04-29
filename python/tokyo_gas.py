@@ -1,6 +1,8 @@
 from selenium.webdriver.common.by import By
 from time import sleep
 
+import datetime
+
 
 def get_gas_cost(driver, mail_address, password):
 
@@ -42,9 +44,23 @@ def get_gas_cost(driver, mail_address, password):
     mom = driver.find_element(By.XPATH, '//*[@id="gas"]/div[2]/div[2]/div[2]/div[3]/p/span').text
     mom_days = driver.find_element(By.XPATH, '//*[@id="gas"]/div[2]/div[2]/div[2]/div[3]/div/p[2]').text
 
-    print('使用期間:' + usage_term)
-    print('使用日:' + usage_days)
-    print('請求額:' + billing_amount)
-    print('使用量:' + usage_amount)
-    print('前年同月:' + yoy + '(' + yoy_days + ')')
-    print('前月:' + mom + '(' + mom_days + ')')
+    # If there is no data
+    if yoy == '0':
+        yoy = '-'
+
+    if mom == '0':
+        mom = '-'
+
+    now = datetime.datetime.now()
+
+    message = '\n' + str(now.year) + '年' + str(now.month) + ' 月 ガス使用量・料金\n\n'
+    message += '使用期間:' + usage_term + '\n'
+    message += '請求額(円):' + billing_amount + '\n'
+    message += '使用量(m^3):' + usage_amount + '\n'
+    message += '前月使用量(m^3)' + mom + '\n'
+    message += '前年同月使用量(m^3):' + yoy
+
+    # TODO delete
+    print(message)
+
+    return message
