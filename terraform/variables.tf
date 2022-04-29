@@ -32,6 +32,48 @@ variable "line_notify_token_parameter_name" {
   description = "Parameter name of Systems Manager Parameter Store for LINE Notify token"
 }
 
+variable "mail_address_parameter_name" {
+  type        = string
+  default     = "mail-address"
+  description = "Parameter name of Systems Manager Parameter Store for mail address"
+}
+
+variable "mail_address_parameter_name" {
+  type        = string
+  default     = "mail-address"
+  description = "Parameter name of Systems Manager Parameter Store for mail address"
+}
+
+variable "tokyo_gas_password_parameter_name" {
+  type        = string
+  default     = "tokyo-gas-password"
+  description = "Parameter name of Systems Manager Parameter Store for Tokyo Gas password"
+}
+
+variable "tokyo_suido_id_parameter_name" {
+  type        = string
+  default     = "tokyo-suido-id"
+  description = "Parameter name of Systems Manager Parameter Store for Tokyo Suido ID"
+}
+
+variable "tokyo_suido_password_parameter_name" {
+  type        = string
+  default     = "tokyo-suido-password"
+  description = "Parameter name of Systems Manager Parameter Store for Tokyo Suido password"
+}
+
+variable "next_power_id_parameter_name" {
+  type        = string
+  default     = "next-power-id"
+  description = "Parameter name of Systems Manager Parameter Store for Next Power ID"
+}
+
+variable "next_power_password_parameter_name" {
+  type        = string
+  default     = "next-power-password"
+  description = "Parameter name of Systems Manager Parameter Store for Next Power password"
+}
+
 data "aws_caller_identity" "current" {}
 
 data "aws_region" "current" {}
