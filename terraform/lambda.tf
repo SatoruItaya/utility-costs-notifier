@@ -53,7 +53,6 @@ resource "aws_iam_role" "lambda_iam_role" {
 EOF
 }
 
-/*
 resource "aws_iam_policy" "lambda_iam_policy" {
   name        = var.lambda_function_name
   path        = "/"
@@ -75,32 +74,25 @@ resource "aws_iam_policy" "lambda_iam_policy" {
     {
       "Action": "ssm:GetParameter",
       "Resource": [
-        "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.client_id_parameter_name}",
-        "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.client_secret_parameter_name}",
-        "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.line_notify_token_parameter_name}"
+        "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.line_notify_token_parameter_name}",
+        "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.mail_address_parameter_name}",
+        "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.tokyo_gas_password_parameter_name}",
+        "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.tokyo_suido_id_parameter_name}",
+        "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.tokyo_suido_password_parameter_name}",
+        "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.next_power_id_parameter_name}",
+        "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.next_power_password_parameter_name}"
       ],
       "Effect": "Allow"
     },
-    {
-      "Action": [
-        "s3:Put*",
-        "s3:Get*"
-      ],
-      "Resource": "${aws_s3_bucket.fitbit_refresh_cb_bucket.arn}/${var.fitbit_refresh_cb_file_name}",
-      "Effect": "Allow"
-    }
   ]
 }
 EOF
 }
-*/
 
-/*
 resource "aws_iam_role_policy_attachment" "lambda_iam_role_policy_attachment" {
   role       = aws_iam_role.lambda_iam_role.name
   policy_arn = aws_iam_policy.lambda_iam_policy.arn
 }
-*/
 
 /*
 resource "aws_s3_bucket" "fitbit_refresh_cb_bucket" {
