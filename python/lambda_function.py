@@ -1,11 +1,13 @@
 from selenium import webdriver
 from selenium.webdriver.chrome import service as fs
+from selenium.webdriver.chrome.options import Options
 import boto3
 import os
 import requests
 import tokyo_gas
 import tokyo_suido
 import next_power
+import chromedriver_binary
 
 LINE_NOTIFY_TOKEN_PARAMETER_NAME = os.environ["LINE_NOTIFY_TOKEN_PARAMETER_NAME"]
 URL = "https://notify-api.line.me/api/notify"
@@ -24,25 +26,26 @@ def get_parameter(name):
 # def lambda_handler(event, context):
 def lambda_handler():
 
+    options = Options()
+    options.add_argument('--headless')
+
     chrome_service = fs.Service(executable_path='./chromedriver')
-    driver = webdriver.Chrome(service=chrome_service)
+    driver = webdriver.Chrome(service=chrome_service, options=options)
 
     mail_address = get_parameter('mail-address')
     tokyo_gas_password = get_parameter('tokyo-gas-password')
 
-    #tokyo_gas.get_gas_cost(driver, mail_address, tokyo_gas_password)
+    #message = tokyo_gas.get_gas_cost(driver, mail_address, tokyo_gas_password)
 
     tokyo_suido_id = get_parameter('tokyo-suido-id')
     tokyo_suido_pawssword = get_parameter('tokyo-suido-password')
 
-    #tokyo_suido.get_suido_cost(driver, tokyo_suido_id, tokyo_suido_pawssword)
+    message = tokyo_suido.get_suido_cost(driver, tokyo_suido_id, tokyo_suido_pawssword)
 
     next_power_id = get_parameter('next-power-id')
     next_power_password = get_parameter('next-power-password')
 
-    next_power_message = next_power.get_electricity_cost(driver, next_power_id, next_power_password)
-
-    message = next_power_message
+    #message = next_power.get_electricity_cost(driver, next_power_id, next_power_password)
 
     headers = {"Authorization": "Bearer %s" % get_parameter(LINE_NOTIFY_TOKEN_PARAMETER_NAME)}
     data = {'message': message}
