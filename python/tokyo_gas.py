@@ -57,7 +57,7 @@ def get_gas_cost(driver, mail_address, password):
     message += '使用期間:' + usage_term + '\n'
     message += '請求額(円):' + billing_amount + '\n'
     message += '使用量(m^3):' + usage_amount + '\n'
-    message += '前月使用量(m^3)' + mom + '\n'
+    message += '前月使用量(m^3):' + mom + '\n'
     message += '前年同月使用量(m^3):' + yoy
 
     # TODO delete
