@@ -22,20 +22,14 @@ variable "cloudwatch_event_rule_name" {
 
 variable "cloudwatch_event_schedule_expression" {
   type        = string
-  default     = "cron(0 3 1 * ? *)"
+  default     = "cron(0 3 * * ? *)"
   description = "Schedule expression for Cloudwatch Event(Cron or Rate)"
 }
 
 variable "line_notify_token_parameter_name" {
   type        = string
-  default     = "line-notify-token"
+  default     = "utility-costs-line-notify-token"
   description = "Parameter name of Systems Manager Parameter Store for LINE Notify token"
-}
-
-variable "mail_address_parameter_name" {
-  type        = string
-  default     = "mail-address"
-  description = "Parameter name of Systems Manager Parameter Store for mail address"
 }
 
 variable "mail_address_parameter_name" {
