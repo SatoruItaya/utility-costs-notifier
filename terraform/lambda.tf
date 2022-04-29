@@ -93,11 +93,3 @@ resource "aws_iam_role_policy_attachment" "lambda_iam_role_policy_attachment" {
   role       = aws_iam_role.lambda_iam_role.name
   policy_arn = aws_iam_policy.lambda_iam_policy.arn
 }
-
-/*
-resource "aws_s3_bucket" "fitbit_refresh_cb_bucket" {
-  bucket        = var.fitbit_refresh_cb_bucket_name
-  acl           = "private"
-  force_destroy = false
-}
-*/
