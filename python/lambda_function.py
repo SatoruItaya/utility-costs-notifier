@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome import service as fs
 from selenium.webdriver.chrome.options import Options
 import boto3
+import sys
 import os
 import requests
 import tokyo_gas
@@ -22,15 +23,23 @@ def get_parameter(name):
 
     return response['Parameter']['Value']
 
+# def lambda_handler():
 
-# def lambda_handler(event, context):
-def lambda_handler():
+
+def lambda_handler(event, context):
 
     options = Options()
     options.add_argument('--headless')
+    options.add_argument("--no-sandbox")
+    options.add_argument("--single-process")
+    options.add_argument('--disable-dev-shm-usage')
+    options.binary_location = "/opt/headless-chromium"
 
+    print('--------configure chrome driver----------------')
     chrome_service = fs.Service(executable_path='./chromedriver')
+    print('--------define driver----------------')
     driver = webdriver.Chrome(service=chrome_service, options=options)
+    print('--------end define driver----------------')
 
     mail_address = get_parameter('mail-address')
     tokyo_gas_password = get_parameter('tokyo-gas-password')
@@ -40,6 +49,7 @@ def lambda_handler():
     tokyo_suido_id = get_parameter('tokyo-suido-id')
     tokyo_suido_pawssword = get_parameter('tokyo-suido-password')
 
+    print('--------call suido----------------')
     message = tokyo_suido.get_suido_cost(driver, tokyo_suido_id, tokyo_suido_pawssword)
 
     next_power_id = get_parameter('next-power-id')
