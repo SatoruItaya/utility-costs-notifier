@@ -1,3 +1,5 @@
+import glob
+import shutil
 from selenium import webdriver
 from selenium.webdriver.chrome import service as fs
 from selenium.webdriver.chrome.options import Options
@@ -23,8 +25,6 @@ def get_parameter(name):
 
     return response['Parameter']['Value']
 
-# def lambda_handler():
-
 
 def lambda_handler(event, context):
 
@@ -34,12 +34,13 @@ def lambda_handler(event, context):
     options.add_argument("--single-process")
     options.add_argument('--disable-dev-shm-usage')
     options.binary_location = "/opt/headless-chromium"
+    options.add_argument("--disable-gpu")
+    options.add_argument("--hide-scrollbars")
+    options.add_argument("--ignore-certificate-errors")
+    options.add_argument("--window-size=880x996")
+    options.add_experimental_option("w3c", True)
 
-    print('--------configure chrome driver----------------')
-    chrome_service = fs.Service(executable_path='./chromedriver')
-    print('--------define driver----------------')
-    driver = webdriver.Chrome(service=chrome_service, options=options)
-    print('--------end define driver----------------')
+    driver = webdriver.Chrome('./chromedriver', chrome_options=options)
 
     mail_address = get_parameter('mail-address')
     tokyo_gas_password = get_parameter('tokyo-gas-password')
@@ -49,7 +50,6 @@ def lambda_handler(event, context):
     tokyo_suido_id = get_parameter('tokyo-suido-id')
     tokyo_suido_pawssword = get_parameter('tokyo-suido-password')
 
-    print('--------call suido----------------')
     message = tokyo_suido.get_suido_cost(driver, tokyo_suido_id, tokyo_suido_pawssword)
 
     next_power_id = get_parameter('next-power-id')

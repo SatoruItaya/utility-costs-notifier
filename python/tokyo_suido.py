@@ -43,7 +43,4 @@ def get_suido_cost(driver, id, password):
     message += '前月使用量(m^3):' + mom + '\n'
     message += '前年同月使用量(m^3):' + yoy
 
-    # TODO delete
-    print(message)
-
     return message
