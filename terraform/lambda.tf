@@ -8,6 +8,8 @@ resource "aws_lambda_function" "lambda" {
   s3_bucket = var.deployment_package_bucket
   s3_key    = var.deployment_package_key
 
+  layers = [aws_lambda_layer_version.headless_chromium.arn]
+
   timeout = 60
 
   environment {
