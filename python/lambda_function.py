@@ -45,6 +45,8 @@ def lambda_handler(event, context):
 
     driver = webdriver.Chrome('./chromedriver', chrome_options=options)
 
+    message = ''
+
     if now.day == 1:
         mail_address = get_parameter('mail-address')
         tokyo_gas_password = get_parameter('tokyo-gas-password')
@@ -59,9 +61,10 @@ def lambda_handler(event, context):
     # next_power_password = get_parameter('next-power-password')
     # message = next_power.get_electricity_cost(driver, next_power_id, next_power_password)
 
-    headers = {"Authorization": "Bearer %s" % get_parameter(LINE_NOTIFY_TOKEN_PARAMETER_NAME)}
-    data = {'message': message}
-    response = requests.post(URL, headers=headers, data=data)
+    if message != '':
+        headers = {"Authorization": "Bearer %s" % get_parameter(LINE_NOTIFY_TOKEN_PARAMETER_NAME)}
+        data = {'message': message}
+        response = requests.post(URL, headers=headers, data=data)
 
 
 if __name__ == "__main__":
