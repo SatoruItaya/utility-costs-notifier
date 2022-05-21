@@ -40,7 +40,7 @@ def get_suido_cost(driver, id, password):
     message += '使用期間:' + usage_term + '\n'
     message += '請求額(円):' + unicodedata.normalize('NFKC', billing_amount) + '\n'
     message += '使用量(m^3):' + unicodedata.normalize('NFKC', usage_amount) + '\n'
-    message += '前月使用量(m^3):' + mom + '\n'
-    message += '前年同月使用量(m^3):' + yoy
+    message += '前期間使用量(m^3):' + mom + '\n'
+    message += '前年同期間使用量(m^3):' + yoy
 
     return message
